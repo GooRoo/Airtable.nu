@@ -1,0 +1,16 @@
+# SPDX-FileCopyrightText: © Serhii “GooRoo” Olendarenko
+# SPDX-FileContributor: Serhii Olendarenko <sergey.olendarenko@gmail.com>
+#
+# SPDX-License-Identifier: BSD-3-Clause
+
+{
+    name: "airtable"
+    nu-version: "0.108.0"
+    version: "0.1.0"
+    type: "module"
+    author: "Serhii “GooRoo” Olendarenko"
+    short-description: "Work with Airtable from Nushell"
+    url: "https://github.com/GooRoo/Airtable.nu"
+    keywords: [airtable, api, http, web]
+    license: "BSD-3-Clause"
+}

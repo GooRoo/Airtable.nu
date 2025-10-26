@@ -1,0 +1,7 @@
+# SPDX-FileCopyrightText: © Serhii “GooRoo” Olendarenko
+# SPDX-FileContributor: Serhii Olendarenko <sergey.olendarenko@gmail.com>
+#
+# SPDX-License-Identifier: BSD-3-Clause
+
+.airtable.conf
+.DS_Store
