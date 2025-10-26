@@ -175,6 +175,34 @@ export def "table show" [
 	| flatten fields
 }
 
+# Retrieve a single record by its ID
+#
+# Any "empty" fields (e.g. "", [], or false) in the record will not be returned.
+@category api
+export def "table get-record" [
+	table_id: string  # The ID of the table to insert to.
+	base_id?: string  # The ID of the database (if not set via `airtable db use`).
+]: [
+	string -> record
+] {
+	let record_id = $in
+
+	let base_id = $base_id
+		| default (get-base-id)
+		| default {
+			error make {
+				msg: "No database ID is provided"
+				help: "Pass the ID as a second argument or set it with `airtable db use`."
+			}
+		}
+
+	let headers = get-auth-header
+	let url = $'https://api.airtable.com/v0/($base_id)/($table_id)/($record_id)'
+
+	http get $url --headers $headers
+		| flatten fields
+}
+
 # Add new records to the table
 @category api
 export def "table create-items" [
