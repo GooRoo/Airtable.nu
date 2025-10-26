@@ -109,6 +109,10 @@ export def "table show" [
 	table_id?: string  # The ID of the table to retrieve (if not comes from the pipe).
 	--fields (-f): list<string>  # Only data for fields whose names are in this list will be included in the result.
 	--sort (-s): table<field: string, direction: string>  # A list of sort objects that specifies how the records will be ordered. Direction key is either "asc" or "desc".
+	--view (-v): string  # The name or ID of a view
+	--record-metadata (-m): list<string>@[[commentCount]]  # if includes `commentCount`, adds a `commentCount` read only property on each record returned.
+	--filter-formula: string   # A formula used to filter records.
+	--column-ids (-i)  # Name each column as corresponding field id (by default field names are used).
 ]: [
 	nothing -> table
 	string  -> table
@@ -123,7 +127,13 @@ export def "table show" [
 			| merge { $'sort[($it.index)][field]': ($it.item.field) }
 			| merge { $'sort[($it.index)][direction]': ($it.item.direction) }
 		  }
-		| merge { fields[]: ($fields | default []) }
+		| merge {
+			fields[]: ($fields | default [])
+			view: ($view | default [])
+			recordMetadata: ($record_metadata | default [])
+			filterByFormula: ($filter_formula | default [])
+			returnFieldsByFieldId: ($column_ids | default [])
+		}
 		| url build-query
 
 	let base_id = match $pipe_in {
