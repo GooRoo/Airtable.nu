@@ -195,7 +195,7 @@ export def "table create-items" [
 	let url = $'https://api.airtable.com/v0/($base_id)/($table_id)'
 
 	$records | chunks 10 | each {|chunk|
-		let fields = $chunk | reject id createdTime | wrap fields
+		let fields = $chunk | reject --optional id createdTime | wrap fields
 		let data = {records: $fields}
 			| merge-if $typecast {typecast: true}
 			| to json
@@ -251,7 +251,7 @@ export def "table update-items" [
 	let url = $'https://api.airtable.com/v0/($base_id)/($table_id)'
 
 	let response = $records | chunks 10 | each {|chunk|
-		let fields = $chunk | each {|row| {id: $row.id, fields: ($row | reject id createdTime)}}
+		let fields = $chunk | each {|row| {id: $row.id, fields: ($row | reject --optional id createdTime)}}
 		let data = {records: $fields}
 			| merge-if $typecast {typecast: true}
 			| merge-if ($fieldsToMatch != null) {performUpsert: {fieldsToMergeOn: $fieldsToMatch}}
