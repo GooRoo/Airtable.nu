@@ -289,7 +289,10 @@ export def "table update-records" [
 	let url = $'https://api.airtable.com/v0/($base_id)/($table_id)'
 
 	let response = $records | chunks 10 | each {|chunk|
-		let fields = $chunk | each {|row| {id: $row.id, fields: ($row | reject --optional id createdTime)}}
+		let fields = $chunk | each {|row|
+			{fields: ($row | reject --optional id createdTime)}
+			| merge-if ('id' in $row) {id: $row.id}
+		}
 		let data = {records: $fields}
 			| merge-if $typecast {typecast: true}
 			| merge-if ($fieldsToMatch != null) {performUpsert: {fieldsToMergeOn: $fieldsToMatch}}
