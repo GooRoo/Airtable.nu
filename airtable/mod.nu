@@ -205,7 +205,7 @@ export def "table get-record" [
 
 # Add new records to the table
 @category api
-export def "table create-items" [
+export def "table create-records" [
 	table_id: string  # The ID of the table to insert to.
 	base_id?: string  # The ID of the database (if not set via `airtable db use`).
 	--typecast        # Enable automatic data conversion from string values.
@@ -225,7 +225,7 @@ export def "table create-items" [
 		| default {
 			error make {
 				msg: "No database ID is provided"
-				help: "Pass the ID via pipe or set it with `airtable db use`."
+				help: "Pass the ID as a second argument or set it with `airtable db use`."
 			}
 		}
 
@@ -246,7 +246,7 @@ export def "table create-items" [
 
 # Update or upsert records in the table
 @category api
-export def "table update-items" [
+export def "table update-records" [
 	table_id: string  # The ID of the table to insert to.
 	base_id?: string  # The ID of the database (if not set via `airtable db use`).
 	--overwrite       # If enabled, request will perform a destructive update and clear all unincluded cell values.
@@ -268,7 +268,7 @@ export def "table update-items" [
 		| default {
 			error make {
 				msg: "No database ID is provided"
-				help: "Pass the ID via pipe or set it with `airtable db use`."
+				help: "Pass the ID as a second argument or set it with `airtable db use`."
 			}
 		}
 
