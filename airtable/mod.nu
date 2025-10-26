@@ -208,7 +208,7 @@ export def "table create-items" [
 
 # Update or upsert records in the table
 @category api
-def "table update-items" [
+export def "table update-items" [
 	table_id: string  # The ID of the table to insert to.
 	base_id?: string  # The ID of the database (if not set via `airtable db use`).
 	--overwrite       # If enabled, request will perform a destructive update and clear all unincluded cell values.
