@@ -291,7 +291,8 @@ export def "table update-records" [
 	let response = $records | chunks 10 | each {|chunk|
 		let fields = $chunk | each {|row|
 			{fields: ($row | reject --optional id createdTime)}
-			| merge-if ('id' in $row) {id: $row.id}
+			| merge-if ('id' in $row) {id: ($row | get -o id)}
+			| compact
 		}
 		let data = {records: $fields}
 			| merge-if $typecast {typecast: true}
